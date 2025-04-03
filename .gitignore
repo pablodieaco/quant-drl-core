@@ -41,4 +41,5 @@ output/
 .DS_Store
 Thumbs.db
 
-
+# Build artifacts
+*.egg-info/
