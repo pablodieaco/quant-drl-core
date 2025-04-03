@@ -36,17 +36,24 @@ pip install -e .
 ---
 
 ## 🧪 Training models
+Use the `train_models.py` script to train models.
 
 Basic command (default config)
 
 ```bash
-python train_experiments.py
+python train_models.py
+```
+
+If you want to update the `hierarchy.json` automatically. Add the `--update_hierarchy` flag:
+
+```bash
+python train_models.py --update_hierarchy
 ```
 
 Custom training with options:
 
 ```bash
-python train_experiments.py \
+python train_models.py \
   --algorithms PPO SAC \
   --features LSTM CNNLSTM \
   --learning_rates 0.0003 0.0001 \
@@ -54,6 +61,8 @@ python train_experiments.py \
   --length_train_data 8 \
   --length_eval_data 2 \
   --end_date_year 2021 \
+  --total_timesteps 1e6 \
+  --checkpoint_freq 1e5 \
   --update_hierarchy
 ```
 

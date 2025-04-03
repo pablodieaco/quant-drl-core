@@ -1,4 +1,5 @@
 import json
+from pathlib import Path
 import os
 import re
 from datetime import datetime
@@ -30,7 +31,7 @@ def update_model_hierarchy(
     selected_features=None,
 ):
     selected_algorithms = selected_algorithms or ["PPO", "SAC", "DDPG"]
-    selected_features = selected_features or ["NoFeature", "CNN", "LSTM", "Transformer"]
+    selected_features = selected_features or ["NoFeature", "CNN", "LSTM", "Transformer", "CNNLSTM"]
 
     hierarchy = load_existing_hierarchy(json_file)
 
@@ -54,10 +55,14 @@ def update_model_hierarchy(
                                 if timestamp and (min_date is None or timestamp >= min_date):
                                     if model not in existing_models:
                                         hierarchy[algo][feature].append(model)
+    
 
     return hierarchy
 
 
 def save_hierarchy(json_file_path, hierarchy):
+    json_file_path = Path(json_file_path)
+    json_file_path.parent.mkdir(parents=True, exist_ok=True)  # 👈 crea la carpeta si no existe
+
     with open(json_file_path, "w") as json_file:
         json.dump({"gym_models": hierarchy}, json_file, indent=2)

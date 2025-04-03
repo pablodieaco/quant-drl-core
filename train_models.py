@@ -22,7 +22,7 @@ def parse_args():
         default=["SAC"],
         choices=["DDPG", "TD3", "SAC", "PPO"],
     )
-    parser.add_argument("--features", nargs="+", default=["CNNLSTM"])
+    parser.add_argument("--features", nargs="+", default=["CNNLSTM"], choices=["NoFeature", "LSTM", "CNNLSTM", "Transformer"])
     parser.add_argument("--learning_rates", nargs="+", type=float, default=[1e-4])
     parser.add_argument("--n_companies", nargs="+", type=int, default=[10])
 
@@ -64,6 +64,19 @@ def parse_args():
         help="Frecuencia de guardado de los checkpoints",
     )
     parser.add_argument(
+        "--checkpoint_path",
+        type=str,
+        default="models/",
+        help="Ruta donde guardar los checkpoints",
+    )
+    parser.add_argument(
+        "--total_timesteps",
+        type=int,
+        default=None,
+        required=False,
+        help="Número total de pasos para el entrenamiento",
+    )
+    parser.add_argument(
         "--lstm_layers",
         type=int,
         default=4,
@@ -93,6 +106,10 @@ def parse_args():
 
 def main():
     """Función principal que configura y lanza los experimentos."""
+
+    time_start = datetime.now()
+    logger.info("Iniciando el script de entrenamiento masivo...")
+    time.sleep(1)
     args = parse_args()
 
     total_experiments = list(
@@ -109,6 +126,12 @@ def main():
     for algo, feature, lr, n_comp in total_experiments:
         companies_abv, companies_names = get_companies(
             n=n_comp, sectors_filter=args.sectors, shuffle=False
+        )
+
+        total_timesteps = (
+            args.total_timesteps
+            if args.total_timesteps is not None
+            else 1e6 if algo == "PPO" else 3e5
         )
 
         config = {
@@ -133,7 +156,7 @@ def main():
             "window_length": args.window_length,
             "steps": args.steps,
             "scale_rewards": True,
-            "total_timesteps": 1e6 if algo == "PPO" else 3e5,
+            "total_timesteps": total_timesteps,
             "checkpoint_freq": args.checkpoint_freq,
             "learning_rate": lr,
             "lstm_layers": args.lstm_layers,
@@ -170,8 +193,8 @@ def main():
 
         hierarchy_json_path = Path("models/metadata/hierarchy.json")
         models_root = Path("models")
-        timestamp_now = datetime.now().strftime("%Y%m%d-%H%M%S")
-        min_date = datetime.strptime(timestamp_now, "%Y%m%d-%H%M%S")
+        timestamp_start = time_start.strftime("%Y%m%d-%H%M%S")
+        min_date = datetime.strptime(timestamp_start, "%Y%m%d-%H%M%S")
 
         hierarchy = update_model_hierarchy(
             root_dir=str(models_root),
