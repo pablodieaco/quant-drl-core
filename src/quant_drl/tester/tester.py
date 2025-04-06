@@ -155,13 +155,19 @@ class Tester:
         )
 
     def load_model(
-        self, base_path, name, steps=None, feature_extractor=None, algorithm=None
+        self,
+        base_path,
+        name,
+        steps=None,
+        feature_extractor=None,
+        algorithm=None,
+        num_assets=6,
     ):
         """Carga un modelo de entrenamiento desde disco."""
         model_file = (
-            f"{base_path}/{name}/model_{steps}_steps"
+            f"{base_path}/{name}/model_{steps}_steps.zip"
             if steps
-            else f"{base_path}/{name}/model_final"
+            else f"{base_path}/{name}/model_final.zip"
         )
 
         if feature_extractor is None:
@@ -182,25 +188,39 @@ class Tester:
             else:
                 algorithm = None
 
+        policy_kwargs = None
         if feature_extractor == "CNNLSTM":
-            custom_objects = {"features_extractor": CustomCNNLSTMFeatureExtractor}
+            policy_kwargs = dict(
+                features_extractor_class=CustomCNNLSTMFeatureExtractor,
+                features_extractor_kwargs={
+                    "num_assets": num_assets,
+                },
+            )
         elif feature_extractor == "LSTM":
-            custom_objects = {"features_extractor": CustomLSTMFeatureExtractor}
+            policy_kwargs = dict(
+                features_extractor_class=CustomLSTMFeatureExtractor,
+                features_extractor_kwargs={
+                    "num_assets": num_assets,
+                },
+            )
         else:
             custom_objects = None
 
+        algo_params = {
+            "policy": "MultiInputPolicy",
+            "env": self.port_train_env,
+            "verbose": 2,
+            "policy_kwargs": policy_kwargs,
+        }
+
         if algorithm == "SAC":
-            self.model = SAC.load(
-                model_file, env=self.port_train_env, custom_objects=custom_objects
-            )
-        elif algorithm == "PPO":
-            self.model = PPO.load(
-                model_file, env=self.port_train_env, custom_objects=custom_objects
-            )
+            self.model = SAC(**algo_params)
         elif algorithm == "DDPG":
-            self.model = DDPG.load(
-                model_file, env=self.port_train_env, custom_objects=custom_objects
-            )
+            self.model = DDPG(**algo_params)
+        else:
+            self.model = PPO(**algo_params)
+
+        self.model.set_parameters(model_file)
 
     def evaluate(
         self,

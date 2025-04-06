@@ -3,7 +3,7 @@
 **quant-drl-core** is a research-focused framework for applying Deep Reinforcement Learning (DRL) to portfolio management and financial decision-making.  
 It is designed to be **modular**, **extensible**, and easy to integrate into experimentation pipelines or production systems.
 
-> 📘 This project was developed as part of my **Bachelor's Thesis (TFG)** for the **Double Degree in Mathematics and Computer Engineering** at the **University of Seville**.
+> 🎓 This project was developed as part of my **Bachelor's Thesis (TFG)** for the **Double Degree in Mathematics and Computer Engineering** at the **University of Seville**.
 
 
 ---
@@ -118,21 +118,31 @@ Inside `notebooks/` you’ll find:
 - [ ] Hyperparameter optimization with Optuna
 - [ ] Integration with MLFlow
 - [ ] Multi-agent extensions
-- [X] Integration with a live dashboard (Streamlit) ([quant-drl-dashboard](https://github.com/your-username/quant-drl-dashboard))
+- [X] Integration with a live dashboard (Streamlit) ([quant-drl-web](https://github.com/your-username/quant-drl-web))
 
----
 ## 📝 License
 
-MIT License
+This project is licensed under the **MIT License**.  
+See the [LICENSE](./LICENSE) file for details.
 
 ---
 
 ## 🙋‍♂️ Author
 
-Developed by **Pablo Diego Acosta**  
-Connect via [LinkedIn](https://www.linkedin.com/in/pablodiegoacosta) or open an issue on GitHub 🚀
+Made with ❤️ by **Pablo Diego Acosta**
+
+- 💼 LinkedIn: [linkedin.com/in/pablodiegoacosta](https://www.linkedin.com/in/pablodiegoacosta)
 
 ---
+
+## 🤝 Contributing
+
+Whether you're a researcher, developer, or enthusiast — feel free to contribute!  
+You're welcome to suggest improvements, propose new architectures, experiment with custom reward functions, or integrate new DRL algorithms.
+
+✨ Open a pull request, start a discussion, or simply share your ideas.
+
+Together, we can make this framework even more powerful for the DRL + Finance community 🚀
 
 ## 📚 References
 
