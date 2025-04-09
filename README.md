@@ -71,6 +71,13 @@ Models and logs will be saved in:
 - 📁 `logs/` – experiment logs
 - 📄 `models/metadata/hierarchy.json` – metadata for evaluation
 
+Optional (Open Tensorboard)
+
+```bash
+tensorboard --logdir=logs/
+```
+Tensorboard framework will be available at http://localhost:16006
+
 ---
 
 ## 📊 Evaluating models
@@ -117,7 +124,7 @@ Inside `notebooks/` you’ll find:
 - [ ] Hyperparameter optimization with Optuna
 - [ ] Integration with MLFlow
 - [ ] Multi-agent extensions
-- [X] Integration with a live dashboard (Streamlit) ([quant-drl-web](https://github.com/your-username/quant-drl-web))
+- [X] Integration with a live dashboard (Streamlit) ([quant-drl-web](https://github.com/pablodieaco/quant-drl-web))
 
 ## 📝 License
 
