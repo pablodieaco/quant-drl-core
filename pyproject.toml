@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "quant-drl-core"  # Este será el nombre visible en PyPI
-version = "0.1.0"
+name = "quant-drl-core" 
+version = "0.1.1"
 description = "Deep Reinforcement Learning for Financial Portfolio Management"
 authors = [
   { name="Pablo Diego Acosta", email="pablodieaco@gmail.com" }
@@ -19,17 +19,17 @@ dependencies = [
   "pandas_market_calendars==4.6.1",
   "gym==0.23.0",
   "matplotlib==3.9.0",
-  "stable-baselines3==2.5.0",
+  "stable-baselines3[extra]==2.5.0",
   "scikit-learn==1.6.1",
   "loguru==0.7.3",
   "tqdm==4.66.1",
-  "tensorflow==2.19.0",
   "tensorboard==2.19.0",
   "torch==2.6.0",
   "plotly==6.0.0",
   "seaborn==0.13.2",
   "yfinance==0.2.54",
   "ta==0.11.0",
+  "nbformat>=4.2.0",
 ]
 
 [project.urls]

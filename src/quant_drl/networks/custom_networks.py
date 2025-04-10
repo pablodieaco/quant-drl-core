@@ -89,7 +89,7 @@ class CustomCNNFeatureExtractor(BaseFeaturesExtractor):
 
 
 class CustomLSTMFeatureExtractor(BaseFeaturesExtractor):
-    def __init__(self, observation_space, num_assets, features_dim=256, lstm_layers=2):
+    def __init__(self, observation_space, num_assets, features_dim=256, lstm_layers=4):
         super(CustomLSTMFeatureExtractor, self).__init__(
             observation_space, features_dim
         )
@@ -154,7 +154,7 @@ class CustomLSTMFeatureExtractor(BaseFeaturesExtractor):
 
 
 class CustomCNNLSTMFeatureExtractor(BaseFeaturesExtractor):
-    def __init__(self, observation_space, num_assets, features_dim=512, lstm_layers=3):
+    def __init__(self, observation_space, num_assets, features_dim=512, lstm_layers=4):
         super(CustomCNNLSTMFeatureExtractor, self).__init__(
             observation_space, features_dim
         )
@@ -224,7 +224,7 @@ class CustomCNNLSTMFeatureExtractor(BaseFeaturesExtractor):
 
 
 class CustomExtremeCNNLSTMFeatureExtractor(BaseFeaturesExtractor):
-    def __init__(self, observation_space, num_assets, features_dim=512, lstm_layers=3):
+    def __init__(self, observation_space, num_assets, features_dim=512, lstm_layers=4):
         super(CustomExtremeCNNLSTMFeatureExtractor, self).__init__(
             observation_space, features_dim
         )
@@ -332,7 +332,7 @@ class CustomExtremeCNNLSTMFeatureExtractor(BaseFeaturesExtractor):
 
 
 class CustomAdvancedLSTMFeatureExtractor(BaseFeaturesExtractor):
-    def __init__(self, observation_space, num_assets, features_dim=512, lstm_layers=3):
+    def __init__(self, observation_space, num_assets, features_dim=512, lstm_layers=4):
         super(CustomAdvancedLSTMFeatureExtractor, self).__init__(
             observation_space, features_dim
         )

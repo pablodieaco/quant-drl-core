@@ -1,17 +1,16 @@
 import argparse
-import os
 import time
 from datetime import datetime
-from pathlib import Path
 from itertools import product
-import sys
+from pathlib import Path
 
 from loguru import logger
 
 from quant_drl.configurations import get_companies
 from quant_drl.trainer.trainer import Trainer
-from quant_drl.utils.hierarchy_builder import update_model_hierarchy, save_hierarchy
+from quant_drl.utils.hierarchy_builder import save_hierarchy, update_model_hierarchy
 from quant_drl.utils.logging import setup_logger
+
 
 def parse_args():
     parser = argparse.ArgumentParser(description="Entrenamiento masivo de modelos DRL")
@@ -22,7 +21,12 @@ def parse_args():
         default=["SAC"],
         choices=["DDPG", "TD3", "SAC", "PPO"],
     )
-    parser.add_argument("--features", nargs="+", default=["CNNLSTM"], choices=["NoFeature", "LSTM", "CNNLSTM", "Transformer"])
+    parser.add_argument(
+        "--features",
+        nargs="+",
+        default=["CNNLSTM"],
+        choices=["NoFeature", "LSTM", "CNNLSTM", "Transformer"],
+    )
     parser.add_argument("--learning_rates", nargs="+", type=float, default=[1e-4])
     parser.add_argument("--n_companies", nargs="+", type=int, default=[10])
 
@@ -100,7 +104,7 @@ def parse_args():
         default=2022,
         help="Año de finalización de los datos",
     )
-    
+
     return parser.parse_args()
 
 
@@ -131,7 +135,9 @@ def main():
         total_timesteps = (
             args.total_timesteps
             if args.total_timesteps is not None
-            else 1e6 if algo == "PPO" else 3e5
+            else 1e6
+            if algo == "PPO"
+            else 3e5
         )
 
         config = {
@@ -187,7 +193,7 @@ def main():
             f"Experimento completado. Tiempo de ejecución: {time.time() - checkpoint_time:.2f} segundos"
         )
         logger.info("#" * 50)
-    
+
     if args.update_hierarchy:
         logger.info("Actualizando archivo hierarchy.json...")
 
@@ -206,6 +212,7 @@ def main():
 
         save_hierarchy(str(hierarchy_json_path), hierarchy)
         logger.success("Archivo hierarchy.json actualizado.")
+
 
 if __name__ == "__main__":
     logger = setup_logger("logs/train.log")

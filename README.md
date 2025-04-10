@@ -61,8 +61,8 @@ python train_models.py \
   --length_train_data 8 \
   --length_eval_data 2 \
   --end_date_year 2021 \
-  --total_timesteps 1e6 \
-  --checkpoint_freq 1e5 \
+  --total_timesteps 1_000_000 \
+  --checkpoint_freq 100_000 \
   --update_hierarchy
 ```
 

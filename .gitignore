@@ -10,6 +10,7 @@ __pycache__/
 .venv/
 env/
 venv/
+.venv*
 
 # === Archivos temporales de notebooks ===
 .ipynb_checkpoints/
@@ -43,3 +44,6 @@ Thumbs.db
 
 # Build artifacts
 *.egg-info/
+dist/
+*.whl
+*tar.gz

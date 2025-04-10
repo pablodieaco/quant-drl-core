@@ -156,12 +156,13 @@ class Tester:
 
     def load_model(
         self,
-        base_path,
-        name,
-        steps=None,
-        feature_extractor=None,
-        algorithm=None,
-        num_assets=6,
+        base_path: str,
+        name: str,
+        steps: int = None,
+        feature_extractor: str = None,
+        algorithm: str = None,
+        num_assets: int = 6,
+        num_lstm_layers: int = 4,
     ):
         """Carga un modelo de entrenamiento desde disco."""
         model_file = (
@@ -194,6 +195,7 @@ class Tester:
                 features_extractor_class=CustomCNNLSTMFeatureExtractor,
                 features_extractor_kwargs={
                     "num_assets": num_assets,
+                    "lstm_layers": num_lstm_layers,
                 },
             )
         elif feature_extractor == "LSTM":
@@ -201,6 +203,7 @@ class Tester:
                 features_extractor_class=CustomLSTMFeatureExtractor,
                 features_extractor_kwargs={
                     "num_assets": num_assets,
+                    "lstm_layers": num_lstm_layers,
                 },
             )
         else:
