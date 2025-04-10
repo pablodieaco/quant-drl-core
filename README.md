@@ -29,7 +29,6 @@ git clone https://github.com/your-username/quant-drl-core.git
 cd quant-drl-core
 python -m venv venv
 source venv/bin/activate         # Windows: venv\Scripts\activate
-pip install -r requirements.txt
 pip install -e .
 ```
 
@@ -71,6 +70,13 @@ Models and logs will be saved in:
 - 📁 `models/` – trained model files
 - 📁 `logs/` – experiment logs
 - 📄 `models/metadata/hierarchy.json` – metadata for evaluation
+
+Optional (Open Tensorboard)
+
+```bash
+tensorboard --logdir=logs/
+```
+Tensorboard framework will be available at http://localhost:16006
 
 ---
 
@@ -118,7 +124,7 @@ Inside `notebooks/` you’ll find:
 - [ ] Hyperparameter optimization with Optuna
 - [ ] Integration with MLFlow
 - [ ] Multi-agent extensions
-- [X] Integration with a live dashboard (Streamlit) ([quant-drl-web](https://github.com/your-username/quant-drl-web))
+- [X] Integration with a live dashboard (Streamlit) ([quant-drl-web](https://github.com/pablodieaco/quant-drl-web))
 
 ## 📝 License
 
