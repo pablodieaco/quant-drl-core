@@ -3,18 +3,17 @@ import json
 import re
 import shutil
 import time
-import sys
 from datetime import datetime
 from pathlib import Path
 
 import numpy as np
 import pandas as pd
-from tqdm import tqdm
 from loguru import logger
+from tqdm import tqdm
 
 from quant_drl.configurations import get_complete_configuration
-from quant_drl.utils.logging import setup_logger
 from quant_drl.tester.tester import Tester
+from quant_drl.utils.logging import setup_logger
 
 
 def extract_timestamp(model_name: str) -> str | None:
@@ -37,6 +36,7 @@ def parse_learning_rate(model_name: str) -> float:
 def parse_n_companies(model_name: str) -> int:
     return int(model_name.split("ncompanies_")[1].split("_")[0])
 
+
 def parse_steps_override(step_list):
     override = {}
     for item in step_list:
@@ -48,21 +48,20 @@ def parse_steps_override(step_list):
     return override
 
 
-
 def evaluate_all_models(args):
     logger.info(f"Cargando jerarquía desde: {args.hierarchy_path}")
     with open(args.hierarchy_path, "r") as f:
         models_data = json.load(f)
         hierarchy = models_data.get("gym_models", {})
         if not hierarchy:
-            logger.error("No se encontró la clave 'gym_models' en el archivo de jerarquía.")
+            logger.error(
+                "No se encontró la clave 'gym_models' en el archivo de jerarquía."
+            )
             return
 
     results = []
     total_models = sum(
-        len(models)
-        for algo in hierarchy.values()
-        for models in algo.values()
+        len(models) for algo in hierarchy.values() for models in algo.values()
     )
 
     logger.info(f"Modelos a evaluar: {total_models}")
@@ -83,7 +82,7 @@ def evaluate_all_models(args):
                     config["normalize"] = normalization
 
                     tester = Tester(config)
-                    base_path = args.models_dir / algo / feature
+                    base_path = args.models_dir / algo / feature / model_name
 
                     if args.use_final_model:
                         model_file = "model_final.zip"
@@ -93,7 +92,14 @@ def evaluate_all_models(args):
                         model_file = f"{model_name}_{steps}_steps.zip"
 
                     try:
-                        tester.load_model(base_path, model_file)
+                        full_path = base_path / model_file
+                        tester.load_model(
+                            full_path,
+                            is_full_path=True,
+                            feature_extractor=feature,
+                            algorithm=algo,
+                            num_assets=n_companies,
+                        )
                     except Exception as e:
                         logger.warning(f"Error cargando modelo '{model_name}': {e}")
                         pbar.update(1)
@@ -108,18 +114,20 @@ def evaluate_all_models(args):
                             if not k.startswith("all_")
                         }
 
-                        results.append({
-                            "algorithm": algo,
-                            "feature": feature,
-                            "number_of_companies": n_companies,
-                            "learning_rate": learning_rate,
-                            "phase": phase,
-                            "model_name": model_name,
-                            "steps": steps if steps else "final",
-                            "number_of_episodes": 50,
-                            "timestamp": timestamp,
-                            **filtered_metrics,
-                        })
+                        results.append(
+                            {
+                                "algorithm": algo,
+                                "feature": feature,
+                                "number_of_companies": n_companies,
+                                "learning_rate": learning_rate,
+                                "phase": phase,
+                                "model_name": model_name,
+                                "steps": steps if steps else "final",
+                                "number_of_episodes": 50,
+                                "timestamp": timestamp,
+                                **filtered_metrics,
+                            }
+                        )
 
                     logger.success(f"Completado: {model_name}")
                     pbar.update(1)
@@ -141,7 +149,6 @@ def evaluate_all_models(args):
         logger.info("Archivo de jerarquía no movido (flag --no_move activado)")
 
     logger.success("Evaluación completada con éxito.")
-
 
 
 def parse_args():

@@ -190,7 +190,7 @@ def get_complete_configuration(
         "total_timesteps": 3 * 10e5,
         "checkpoint_freq": 5 * 10e4,
         "learning_rate": 0.0001,
-        "lstm_layers": 3,
+        "lstm_layers": 4,
     }
 
     if base_config["algorithm"] == "PPO":

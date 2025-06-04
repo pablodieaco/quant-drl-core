@@ -3,7 +3,7 @@ from datetime import datetime
 import matplotlib.pyplot as plt
 import numpy as np
 import plotly.graph_objects as go
-from stable_baselines3 import DDPG, PPO, SAC
+from stable_baselines3 import DDPG, PPO, SAC, TD3
 from stable_baselines3.common.env_util import make_vec_env
 
 from quant_drl.data.stock_data import StockData
@@ -157,7 +157,8 @@ class Tester:
     def load_model(
         self,
         base_path: str,
-        name: str,
+        name: str = None,
+        is_full_path: bool = False,
         steps: int = None,
         feature_extractor: str = None,
         algorithm: str = None,
@@ -165,11 +166,14 @@ class Tester:
         num_lstm_layers: int = 4,
     ):
         """Carga un modelo de entrenamiento desde disco."""
-        model_file = (
-            f"{base_path}/{name}/model_{steps}_steps.zip"
-            if steps
-            else f"{base_path}/{name}/model_final.zip"
-        )
+        if is_full_path:
+            model_file = base_path
+        else:
+            model_file = (
+                f"{base_path}/{name}/model_{steps}_steps"
+                if steps
+                else f"{base_path}/{name}/model_final"
+            )
 
         if feature_extractor is None:
             if "CNNLSTM" in base_path:
@@ -186,6 +190,8 @@ class Tester:
                 algorithm = "PPO"
             elif "DDPG" in base_path:
                 algorithm = "DDPG"
+            elif "TD3" in base_path:
+                algorithm = "TD3"
             else:
                 algorithm = None
 
@@ -220,7 +226,9 @@ class Tester:
             self.model = SAC(**algo_params)
         elif algorithm == "DDPG":
             self.model = DDPG(**algo_params)
-        else:
+        elif algorithm == "TD3":
+            self.model = TD3(**algo_params)
+        elif algorithm == "PPO":
             self.model = PPO(**algo_params)
 
         self.model.set_parameters(model_file)

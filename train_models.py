@@ -28,7 +28,7 @@ def parse_args():
         choices=["NoFeature", "LSTM", "CNNLSTM", "Transformer"],
     )
     parser.add_argument("--learning_rates", nargs="+", type=float, default=[1e-4])
-    parser.add_argument("--n_companies", nargs="+", type=int, default=[10])
+    parser.add_argument("--n_companies", nargs="+", type=int, default=[12])
 
     parser.add_argument("--reward_type", type=str, default="log_reward")
     parser.add_argument("--initial_capital", type=float, default=10000)

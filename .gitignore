@@ -37,6 +37,7 @@ models/
 checkpoints/
 runs/
 output/
+examples/
 
 # === Archivos del sistema ===
 .DS_Store
@@ -47,3 +48,7 @@ Thumbs.db
 dist/
 *.whl
 *tar.gz
+
+# 
+results/
+experiments/
