@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="quant_drl",
-    version="0.1.5",
+    version="0.1.6",
     description="Deep Reinforcement Learning for Financial Portfolio Management",
     author="Pablo Diego Acosta",
     packages=find_packages(where="src"),

@@ -156,9 +156,14 @@ class StockData:
                     index_col="Date",
                     parse_dates=True,
                 )
+                data = data[["Open", "High", "Low", "Close", "Volume"]]
+
                 data = data.loc[
                     self.start_date - pd.DateOffset(days=extra_days) : self.end_date
                 ]
+
+                data.columns = pd.MultiIndex.from_product([data.columns, [stock]])
+
             else:
                 data = yf.download(
                     stock,
