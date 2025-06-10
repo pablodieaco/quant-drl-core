@@ -58,6 +58,8 @@ class StockData:
             "Bollinger_Low",
             "ATR",
         ],
+        use_local_data: bool = False,
+        local_data_path: str = None,
     ):
         """
         Inicializa la clase con los datos de mercado y sus indicadores técnicos.
@@ -91,6 +93,9 @@ class StockData:
         self.winsorize = winsorize
         self.percentile = percentile
         self.technical_indicators = technical_indicators
+
+        self.use_local_data = use_local_data
+        self.local_data_path = local_data_path
 
         self._get_stock_data()
         self._get_relative_return_data()
@@ -144,14 +149,25 @@ class StockData:
         smallest_size = float("inf")
 
         for stock in self.comp_abv:
-            data = yf.download(
-                stock,
-                self.start_date - pd.DateOffset(days=extra_days),
-                self.end_date,
-                timeout=30,
-                # auto_adjust=False,
-                threads=False,
-            )
+            if self.use_local_data:
+                # Cargar datos desde un archivo local
+                data = pd.read_csv(
+                    f"{self.local_data_path}/{stock}.csv",
+                    index_col="Date",
+                    parse_dates=True,
+                )
+                data = data.loc[
+                    self.start_date - pd.DateOffset(days=extra_days) : self.end_date
+                ]
+            else:
+                data = yf.download(
+                    stock,
+                    self.start_date - pd.DateOffset(days=extra_days),
+                    self.end_date,
+                    timeout=30,
+                    auto_adjust=False,
+                    threads=False,
+                )
             data = self._include_tech_indicators(data, stock)
             data = data[days_to_remove:]
 

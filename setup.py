@@ -21,7 +21,7 @@ setup(
         "torch==2.6.0",
         "plotly==6.0.0",
         "seaborn>=0.13.2",
-        "yfinance>=0.2.54",
+        "yfinance>=0.2.59",
         "ta>=0.11.0",
         "pandas_market_calendars>=4.6.0",
         "tensorboard>=2.18.0"
