@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "quant-drl-core" 
-version = "0.1.4"
+version = "0.1.5"
 description = "Deep Reinforcement Learning for Financial Portfolio Management"
 authors = [
   { name="Pablo Diego Acosta", email="pablodieaco@gmail.com" }
