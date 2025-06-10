@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 
 setup(
     name="quant_drl",
-    version="0.1.0",
+    version="0.1.4",
     description="Deep Reinforcement Learning for Financial Portfolio Management",
     author="Pablo Diego Acosta",
     packages=find_packages(where="src"),
@@ -24,7 +24,7 @@ setup(
         "yfinance>=0.2.59",
         "ta>=0.11.0",
         "pandas_market_calendars>=4.6.0",
-        "tensorboard>=2.18.0"
+        "tensorboard>=2.18.0",
     ],
     include_package_data=True,
 )
