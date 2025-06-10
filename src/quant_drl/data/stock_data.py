@@ -165,8 +165,6 @@ class StockData:
                     self.start_date - pd.DateOffset(days=extra_days),
                     self.end_date,
                     timeout=30,
-                    auto_adjust=False,
-                    threads=False,
                 )
             data = self._include_tech_indicators(data, stock)
             data = data[days_to_remove:]
