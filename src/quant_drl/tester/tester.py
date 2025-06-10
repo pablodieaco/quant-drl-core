@@ -68,6 +68,8 @@ class Tester:
             start_date=start_train_date,
             include_cash=False,
             technical_indicators=self.configuration["indicators"],
+            use_local_data=self.configuration["use_local_data"],
+            local_data_path=self.configuration["local_data_path"],
         )
 
         self.eval_stock_data = StockData(
@@ -78,6 +80,8 @@ class Tester:
             start_date=start_eval_date,
             include_cash=False,
             technical_indicators=self.configuration["indicators"],
+            use_local_data=self.configuration["use_local_data"],
+            local_data_path=self.configuration["local_data_path"],
         )
 
         self.normalize_data()

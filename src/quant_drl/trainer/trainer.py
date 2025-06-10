@@ -102,6 +102,8 @@ class Trainer:
             start_date=start_train,
             include_cash=False,
             technical_indicators=indicators,
+            use_local_data=self.configuration["use_local_data"],
+            local_data_path=self.configuration["local_data_path"],
         )
 
     def normalize_data(self, stock_data, method):
